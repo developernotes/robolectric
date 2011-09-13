@@ -49,7 +49,7 @@ public class ShadowTextView extends ShadowView {
         applyCompoundDrawablesWithIntrinsicBoundsAttributes();
     }
 
-    @Implementation
+    @Implementation(i18nSafe=false)
     public void setText(CharSequence text) {
         if (text == null) {
             text = "";
@@ -88,11 +88,21 @@ public class ShadowTextView extends ShadowView {
     }
 
     @Implementation
+    public void setInputType(int type){
+        this.inputType = type;
+    }
+
+    @Implementation
+    public int getInputType() {
+        return this.inputType;
+    }
+
+    @Implementation
     public final void setHint(int resId) {
         this.hintText = getResources().getText(resId);
     }
 
-    @Implementation
+    @Implementation(i18nSafe=false)
     public final void setHint(CharSequence hintText) {
         this.hintText = hintText;
     }
@@ -338,16 +348,6 @@ public class ShadowTextView extends ShadowView {
     @Implementation
     public TransformationMethod getTransformationMethod() {
         return transformationMethod;
-    }
-
-    @Implementation
-    public void setInputType(int value) {
-        inputType = value;
-    }
-
-    @Implementation
-    public int getInputType() {
-        return inputType;
     }
 
     public static class CompoundDrawables {

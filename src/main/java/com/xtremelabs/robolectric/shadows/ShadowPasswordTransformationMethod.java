@@ -28,7 +28,7 @@ public class ShadowPasswordTransformationMethod implements TransformationMethod 
         return transformationMethod;
     }
 
-    @Override
+    @Implementation @Override
     public void onFocusChanged(View view, CharSequence charSequence, boolean b, int i, Rect rect) { }
 
     private boolean isEmpty(CharSequence value) {

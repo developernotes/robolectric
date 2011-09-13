@@ -1,7 +1,6 @@
 package com.xtremelabs.robolectric.shadows;
 
 import android.app.Activity;
-import android.content.ContentResolver;
 import android.text.InputType;
 import android.text.method.ArrowKeyMovementMethod;
 import android.text.method.MovementMethod;
@@ -14,8 +13,6 @@ import android.widget.TextView;
 import com.xtremelabs.robolectric.R;
 import com.xtremelabs.robolectric.WithTestDefaultsRunner;
 import org.hamcrest.CoreMatchers;
-import org.hamcrest.core.IsAnything;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,9 +23,7 @@ import java.util.List;
 import static com.xtremelabs.robolectric.Robolectric.shadowOf;
 import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 @RunWith(WithTestDefaultsRunner.class)
 public class TextViewTest {
@@ -135,28 +130,22 @@ public class TextViewTest {
 
     @Test
     public void shouldNotHaveTransformationMethodByDefault(){
-
         ShadowTextView view = new ShadowTextView();
-
         assertThat(view.getTransformationMethod(), is(CoreMatchers.<Object>nullValue()));
     }
 
     @Test
     public void shouldAllowSettingATransformationMethod(){
-
         ShadowTextView view = new ShadowTextView();
         view.setTransformationMethod(new ShadowPasswordTransformationMethod());
-
         assertEquals(view.getTransformationMethod().getClass(), ShadowPasswordTransformationMethod.class);
     }
-
+    
     @Test
-    public void shouldBeAbleToSetAndGetTheInputType(){
-
-        ShadowTextView view = new ShadowTextView();
-        view.setInputType(InputType.TYPE_CLASS_TEXT);
-
-        assertThat(view.getInputType(), is(InputType.TYPE_CLASS_TEXT));
+    public void testGetInputType() throws Exception {
+        assertThat(textView.getInputType(), not(equalTo(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD)));
+        textView.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        assertThat(textView.getInputType(), equalTo(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD));
     }
     
     private List<String> urlStringsFrom(URLSpan[] urlSpans) {
